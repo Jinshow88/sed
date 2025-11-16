@@ -6,9 +6,9 @@ export default function App() {
 
   useEffect(() => {
     async function getUser() {
-      const response = await axios.get(`/user`);
-      const data = response.data;
-
+      const response = await axios.get(`/api/user/get`);
+      // const data = response.data;
+      const data = response.data.userList; 
       setUsers(data);
     }
 
