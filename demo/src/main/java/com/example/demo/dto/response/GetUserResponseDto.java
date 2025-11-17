@@ -30,7 +30,7 @@ public class GetUserResponseDto extends ResponseDto {
         this.count = count;
     }
 
-    public static ResponseEntity<GetUserResponseDto> success(List<GetUserDto> userList, int count) {
+    public static ResponseEntity<GetUserResponseDto>success(List<GetUserDto> userList, int count) {
         GetUserResponseDto result = new GetUserResponseDto(userList, count);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }

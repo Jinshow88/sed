@@ -32,7 +32,18 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public ResponseEntity<PostUserResponseDto> postUser(PostUserRequestDto dto) {
-        return null;
+
+        String name = dto.getName();
+        Integer age = dto.getAge();
+        String introduce = dto.getIntroduce();
+
+        Users users = new Users();
+        users.setName(name);
+        users.setAge(age);
+        users.setIntroduce(introduce);
+
+        userRepository.save(users);
+        return PostUserResponseDto.success();
     }
 
     @Override
@@ -49,25 +60,38 @@ public class UserServiceImpl implements UserService {
             userDto.setIntroduce(user.getIntroduce());
             userDtos.add(userDto);
         }
-    // ⭐ 1. Response용 DTO 만들어서 리스트 넣기
-    GetUserResponseDto response = new GetUserResponseDto();
-    response.setUserList(userDtos);
-    response.setCount(userDtos.size());
+        // ⭐ 1. Response용 DTO 만들어서 리스트 넣기
+        GetUserResponseDto response = new GetUserResponseDto();
+        response.setUserList(userDtos);
+        response.setCount(userDtos.size());
 
-    // ⭐ 2. ResponseEntity 로 감싸서 반환
-    return ResponseEntity.ok(response);
+        // ⭐ 2. ResponseEntity 로 감싸서 반환
+        return GetUserResponseDto.success(
+                response.getUserList(),
+                response.getCount());
     }
 
     @Override
     @Transactional
     public ResponseEntity<DeleteUserResponseDto> deleteUser(DeleteUserRequestDto dto) {
-        return null;
+
+        Integer id = dto.getId();
+
+        if (id == null) {
+            throw new IllegalArgumentException("id 값이 비어있습니다.");
+        }
+        Users users = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다."));
+
+        userRepository.delete(users);
+
+        return DeleteUserResponseDto.success();
     }
 
     @Override
     @Transactional
     public ResponseEntity<UpdateUserResponseDto> updateUser(UpdateUserRequestDto dto) {
-        return null;
+        return UpdateUserResponseDto.success();
     }
 
 }
