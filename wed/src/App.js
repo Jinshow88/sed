@@ -1,6 +1,6 @@
 // src/App.js
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function App() {
   const [users, setUsers] = useState([]);
@@ -77,13 +77,21 @@ export default function App() {
           />
         </div>
 
-        <div>
-          <label>소개 : </label>
+        <div style={{display:"flex", justifyContent:"center"}}>
+          <label 
+          style={{color:"blue"}}>
+            소개 : 
+          </label>
           <textarea
             value={introduce}
             onChange={(e) => setIntroduce(e.target.value)}
             rows={3}
             required
+              style={{
+    color: "blue",
+    backgroundColor: "#f0f8ff",
+    border: "1px solid #888"
+  }}
           />
         </div>
 
